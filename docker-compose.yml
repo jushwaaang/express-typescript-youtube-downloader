@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .  # Build context is the current directory
+      dockerfile: Dockerfile  # Use the same Dockerfile
+    ports:
+      - "3000:3000"  # Expose your app's port (change if your app uses a different port)
+    env_file:
+      - .env  # Load environment variables from .env file
+
+  worker:
+    build:
+      context: .  # Same build context
+      dockerfile: Dockerfile  # Use the same Dockerfile
+    command: ["npm", "run", "worker"]  # Override command to run the worker
+    env_file:
+      - .env  # Load environment variables from .env file
+
+networks:
+  tvsproject:
+    driver: bridge
+
